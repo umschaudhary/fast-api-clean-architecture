@@ -16,7 +16,7 @@ class Session:
     @lru_cache
     def create_session(self) -> scoped_session:
         Session = scoped_session(sessionmaker(
-            autocommit=False, autoflush=False, bind=engine))
+            autocommit=False, autoflush=False, bind=self.engine))
         return Session
 
     def get_session(self) -> Generator[scoped_session, None, None]:

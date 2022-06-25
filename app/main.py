@@ -2,35 +2,21 @@ from fastapi import FastAPI, APIRouter, Query, HTTPException
 from typing import Optional
 from app.core.config import get_settings
 from app.models import User, Job
-from app.api.controllers import page_router
+from app.api.v1.routes import api_router
 
 
-def include_router(app):
+class App:
 
-    app.include_router(
-        page_router,
-        prefix="/pages",
-        tags=["Pages"],
-        responses={404: {"description": "Not found"}}
-    )
-
-
-def start_application():
     settings = get_settings()
-
     app = FastAPI(
         title=settings.PROJECT_NAME,
         version=settings.PROJECT_VERSION,
-        openapi_url="/openapi.json"
+        openapi_url="/api/v1/openapi.json"
     )
 
-    include_router(app)
-    return app
+    def start_application(self):
+        self.app.include_router(api_router)
+        return self.app
 
 
-app = start_application()
-
-
-@app.on_event("startup")
-def on_startup():
-    print("------server started------")
+app = App().start_application()

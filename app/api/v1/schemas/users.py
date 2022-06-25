@@ -9,3 +9,11 @@ class User(BaseModel):
 
 class UserCreate(User):
     password: str
+
+
+class ShowUser(User):
+    id: int
+    is_active: bool
+
+    class Config():
+        orm_mode = True
