@@ -1,28 +1,37 @@
 from datetime import timedelta
-from fastapi import Depends, status, HTTPException
-from fastapi_utils.inferring_router import InferringRouter
-from fastapi_utils.cbv import cbv
+
+from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-
+from fastapi_utils.cbv import cbv
+from fastapi_utils.inferring_router import InferringRouter
 from sqlalchemy.orm import Session
-from starlette.status import HTTP_201_CREATED, HTTP_200_OK
+from starlette.status import HTTP_200_OK, HTTP_201_CREATED
 
-from app.core import Hasher, create_access_token
-from app.core.db import session
-from app.core import get_settings
+from app.api.v1.schemas import (ShowUser, UserCreate, UserLogin,
+                                UserLoginResponse)
 from app.api.v1.services import UserService
-from app.api.v1.schemas import UserCreate, ShowUser, UserLogin, UserLoginResponse
+from app.core import Hasher, create_access_token, get_settings
+from app.core.db import session
 
 user_router = InferringRouter()
 
 
 @cbv(user_router)
 class UserController:
+    """User Controller."""
+
     user_service = UserService()
     settings = get_settings()
 
     @user_router.post("/", response_model=ShowUser, status_code=HTTP_201_CREATED)
     def create_user(self, user: UserCreate, db: Session = Depends(session.get_session)):
+        """
+        Create a user.
+
+        - **username**: str
+        - **email**: str
+        - **password**: str
+        """
         return self.user_service.create_user(user, db)
 
     @user_router.post(
@@ -31,7 +40,12 @@ class UserController:
     def get_token(
         self, form_data: UserLogin, db: Session = Depends(session.get_session)
     ):
+        """
+        Get access token for a user.
 
+        - **email**: str
+        - **password**: str
+        """
         user = self.user_service.authenticate_user(
             form_data.email, form_data.password, db
         )
@@ -52,7 +66,11 @@ class UserController:
         )
 
         access_token = create_access_token(
-            data={"id": str(user.id), "email": user.email, "username": user.username},
+            data={
+                "id": str(user.id),
+                "email": user.email,
+                "username": user.username,
+            },
             expires_delta=access_token_expires,
         )
         response = UserLoginResponse(

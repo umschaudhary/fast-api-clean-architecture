@@ -1,25 +1,29 @@
-from typing import Generator
 from functools import lru_cache
+from typing import Generator
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session, scoped_session
-from .base import Base
+from sqlalchemy.orm import Session, scoped_session, sessionmaker
 
 from app.core.config import get_settings
 
+from .base import Base
 
-class Session:
-    engine = create_engine(
-        get_settings().DATABASE_URL,
-        echo=True, pool_pre_ping=True
-    )
+
+class DBSession:
+    """DB Session."""
+
+    engine = create_engine(get_settings().DATABASE_URL, echo=True, pool_pre_ping=True)
 
     @lru_cache
     def create_session(self) -> scoped_session:
-        Session = scoped_session(sessionmaker(
-            autocommit=False, autoflush=False, bind=self.engine))
+        """DB Session Creation."""
+        Session = scoped_session(
+            sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
+        )
         return Session
 
     def get_session(self) -> Generator[scoped_session, None, None]:
+        """Get DB Session."""
         db = self.create_session()
         try:
             yield db
@@ -27,4 +31,4 @@ class Session:
             db.remove()
 
 
-session = Session()
+session = DBSession()
