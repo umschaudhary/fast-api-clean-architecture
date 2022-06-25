@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    command: poetry run uvicorn app.main:app --host 0.0.0.0 --reload
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./app:/project/app"
+    depends_on:
+      - db
+    env_file: .env
+    stdin_open: true
+    tty: true
+    networks:
+      - speciesnetwork
+  db:
+    image: postgres:13
+    restart: 'no'
+    container_name: ${POSTGRES_SERVER}
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgresdb:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    env_file: .env
+    networks:
+      - speciesnetwork
+
+  nginx:
+    build : ./nginx
+    networks:
+      - speciesnetwork
+    ports:
+      - '80:80'
+    depends_on:
+      - app
+
+  pg_admin:
+    container_name: pg_admin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - '5050:80'
+    depends_on:
+      - db
+
+
+volumes:
+  postgresdb:
+
+networks:
+  speciesnetwork:
+    external: false
+
+
+
