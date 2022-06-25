@@ -1,8 +1,7 @@
 from fastapi import FastAPI, APIRouter, Query, HTTPException
 from typing import Optional
 from app.core.config import get_settings
-from app.models import User, Job
-from app.api.v1.routes import api_router
+from app.api.v1.routes import get_routers
 from app.migrations.run import run_sql_migrations
 
 
@@ -15,8 +14,8 @@ class App:
         openapi_url="/api/v1/openapi.json"
     )
 
-    def start_application(self):
-        self.app.include_router(api_router)
+    def start_application(self) -> FastAPI:
+        get_routers(self.app)
         return self.app
 
 

@@ -1,5 +1,5 @@
 from app.core.db import Base, session
-from app.models import User, Job
+from app.models import User
 from app.core.config import get_settings
 from logging.config import fileConfig
 
