@@ -14,3 +14,4 @@ Fast API Clean Architecture template with docker, nginx, postgres, pgadmin4
 - [ ] User authentication 
 - [ ] Exception handling
 - [ ] Error handling
+- [ ] Singleton instance
