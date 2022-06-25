@@ -5,6 +5,7 @@ Fast API Clean Architecture template with docker, nginx, postgres, pgadmin4
 
 
 ## Instructions
+Run below commands to your terminal
 
 ```bash
 COPY .env.example .env #copy sample env to .env
@@ -13,7 +14,15 @@ COPY .env.example .env #copy sample env to .env
 ```bash
 docker-compose up --build #build and spin docker containers
 ```
-OPEN API : http://localhost/docs
+
+```bash
+make migrate-up # to migrate migrations
+```
+
+- API DOCS : http://localhost/docs 
+- PGADMIN4: http://localhost:5050
+
+Check `Makefile` for available commands
 
 
 ## Features
