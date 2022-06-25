@@ -19,6 +19,8 @@ Jinja2 = "^3.1.2"
 fastapi-utils = "^0.2.1"
 psycopg2-binary = "^2.9.3"
 passlib = "^1.7.4"
+python-jose = "^3.3.0"
+python-multipart = "^0.0.5"
 
 [tool.poetry.dev-dependencies]
 

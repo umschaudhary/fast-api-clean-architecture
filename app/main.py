@@ -11,7 +11,7 @@ class App:
     app = FastAPI(
         title=settings.PROJECT_NAME,
         version=settings.PROJECT_VERSION,
-        openapi_url="/api/v1/openapi.json"
+        openapi_url="/api/v1/openapi.json",
     )
 
     def start_application(self) -> FastAPI:
@@ -22,6 +22,6 @@ class App:
 app = App().start_application()
 
 
-@app.on_event("startup")
-async def startup_event():
-    run_sql_migrations()
+#  @app.on_event("startup")
+#  async def startup_event():
+#      run_sql_migrations()
