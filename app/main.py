@@ -3,6 +3,7 @@ from typing import Optional
 from app.core.config import get_settings
 from app.models import User, Job
 from app.api.v1.routes import api_router
+from app.migrations.run import run_sql_migrations
 
 
 class App:
@@ -20,3 +21,8 @@ class App:
 
 
 app = App().start_application()
+
+
+@app.on_event("startup")
+async def startup_event():
+    run_sql_migrations()

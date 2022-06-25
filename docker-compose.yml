@@ -14,7 +14,7 @@ services:
     stdin_open: true
     tty: true
     networks:
-      - speciesnetwork
+      - apinetwork
   db:
     image: postgres:13
     restart: 'no'
@@ -29,12 +29,12 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     env_file: .env
     networks:
-      - speciesnetwork
+      - apinetwork
 
   nginx:
     build : ./nginx
     networks:
-      - speciesnetwork
+      - apinetwork
     ports:
       - '80:80'
     depends_on:
@@ -57,8 +57,5 @@ volumes:
   postgresdb:
 
 networks:
-  speciesnetwork:
+  apinetwork:
     external: false
-
-
-

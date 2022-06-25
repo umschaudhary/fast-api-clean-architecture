@@ -13,8 +13,7 @@ RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-
 ENV PATH="${PATH}:/root/.poetry/bin"
 
 RUN poetry install
+
 COPY . .
 
-
 EXPOSE 8000
-
