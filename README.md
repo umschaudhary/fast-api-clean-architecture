@@ -38,5 +38,6 @@ Check `Makefile` for available commands
 - [x] User model
 - [ ] User authentication 
 - [ ] Exception handling
+- [ ] CORS, CSRF
 - [ ] Error handling
 - [ ] Singleton instance
