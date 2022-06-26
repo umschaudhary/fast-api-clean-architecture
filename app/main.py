@@ -43,6 +43,11 @@ class App:
 app = App().start_application()
 
 
+@app.get("/health-check")
+def health_check():
+    return {"message": "Hello world!"}
+
+
 #  @app.on_event("startup")
 #  async def startup_event():
 #      run_sql_migrations()
