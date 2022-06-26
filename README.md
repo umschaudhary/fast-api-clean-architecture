@@ -40,4 +40,3 @@ Check `Makefile` for available commands
 - [x] Exception handling
 - [x] CORS middlware
 - [x] Error handling
-- [ ] Singleton instance
