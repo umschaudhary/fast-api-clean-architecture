@@ -24,7 +24,6 @@ class UserLogin(BaseModel):
 class ShowUser(User):
     """Show User Schema."""
 
-    id: str
     is_active: bool
 
     class Config:
