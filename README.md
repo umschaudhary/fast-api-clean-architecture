@@ -36,8 +36,8 @@ Check `Makefile` for available commands
 - [x] Alembic for migrations
 - [x] pydantic data validation
 - [x] User model
-- [ ] User authentication 
-- [ ] Exception handling
-- [ ] CORS, CSRF
-- [ ] Error handling
+- [x] User authentication 
+- [x] Exception handling
+- [x] CORS middlware
+- [x] Error handling
 - [ ] Singleton instance
