@@ -15,9 +15,6 @@ from app.core.db import session
 from app.models import User
 
 user_router = InferringRouter()
-user_router = InferringRouter()
-user_router = InferringRouter()
-user_router = InferringRouter()
 
 
 @cbv(user_router)
